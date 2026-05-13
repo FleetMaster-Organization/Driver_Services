@@ -8,17 +8,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-/**
- * DTO para actualizar el subestado laboral de un conductor.
- *
- * El cliente debe enviar el UUID de un subestado válido,
- * previamente obtenido desde el catálogo de subestados.
- *
- * El Service verifica:
- *   - Que el subestado existe.
- *   - Que si el nuevo estado es INACTIVO o RETIRADO, el conductor no esté EN_RUTA.
- *   - Que si el nuevo estado es RETIRADO, se registre retirement_date.
- */
 @Getter
 @Setter
 @NoArgsConstructor

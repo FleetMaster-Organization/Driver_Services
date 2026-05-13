@@ -6,16 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.List;
 
-/**
- * Convierte entidades License a DTOs de respuesta.
- *
- * Responsabilidad exclusiva: transformación de datos.
- * Aquí vive el cálculo de licenseStatus y daysUntilExpiration porque
- * son derivados directos de los datos de la entidad, no lógica de negocio.
- * La lógica de negocio (validar vigencia máxima, rechazar duplicados) vive en LicenseService.
- */
 @Component
 public class LicenseMapper {
 
@@ -35,7 +28,7 @@ public class LicenseMapper {
                 .build();
     }
 
-    public List<LicenseResponse> toResponseList(List<License> licenses) {
+    public List<LicenseResponse> toResponseList(Collection<License> licenses) {
         return licenses.stream()
                 .map(this::toResponse)
                 .toList();

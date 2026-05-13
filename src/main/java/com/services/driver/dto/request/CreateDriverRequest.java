@@ -11,15 +11,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * DTO para registrar un conductor y su contacto de emergencia.
- *
- * Reglas de negocio validadas aquí (Bean Validation):
- *  - Todos los campos personales son obligatorios.
- *  - Se requiere al menos una categoría de licencia.
- *  - Se requiere exactamente un contacto de emergencia.
- *  - birth_date debe ser en el pasado (la BD además exige >= 18 años).
- */
 @Getter
 @Setter
 @NoArgsConstructor
