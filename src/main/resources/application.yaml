@@ -2,12 +2,13 @@ spring:
   application:
     name: driver-services
 
-  # Configuración para TiDB (Protocolo MySQL)
+  # Configuración PostgreSQL (Supabase)
   datasource:
     url: jdbc:postgresql://${TIDB_HOST}:${TIDB_PORT:6543}/${TIDB_DB}?currentSchema=drivers_db&sslmode=require
     username: ${TIDB_USER}
     password: ${TIDB_PASSWORD}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -40,3 +41,8 @@ feign:
       default:
         connectTimeout: 5000
         readTimeout: 5000
+
+app:
+  jwt:
+    # Clave secreta para firmar los tokens JWT (HS256)
+    secret: ${JWT_SECRET}
