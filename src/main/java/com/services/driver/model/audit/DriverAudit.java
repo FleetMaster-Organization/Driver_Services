@@ -8,9 +8,6 @@ import lombok.Setter;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-/**
- * Registro de auditoría para cambios sobre la entidad Driver.
- */
 @Entity
 @Table(name = "drivers_audits")
 @Getter
@@ -38,7 +35,6 @@ public class DriverAudit {
     @Column(name = "new_value", columnDefinition = "TEXT")
     private String newValue;
 
-    /** Subject del JWT (UUID del usuario que realizó la acción). */
     @Column(name = "modified_by", length = 100, nullable = false)
     private String modifiedBy;
 

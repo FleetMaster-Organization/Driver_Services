@@ -7,16 +7,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-/**
- * Subestados laborales asociados a cada estado padre.
- *
- * ACTIVO   → ACTIVO
- * INACTIVO → SUSPENDIDO | VACACIONES | INCAPACIDAD
- * RETIRADO → DESPEDIDO  | RENUNCIA
- *
- * Al guardar un Driver solo se persiste id_substatus; el estado padre
- * (employment_status) se obtiene mediante JOIN en las consultas.
- */
 @Entity
 @Table(name = "employment_substatus")
 @Getter

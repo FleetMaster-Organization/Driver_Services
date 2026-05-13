@@ -7,10 +7,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-/**
- * Catálogo de estados laborales: ACTIVO, INACTIVO, RETIRADO.
- * Es de solo lectura en runtime; los valores se insertan en el script SQL inicial.
- */
 @Entity
 @Table(name = "employment_status")
 @Getter

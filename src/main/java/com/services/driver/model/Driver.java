@@ -4,25 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-/**
- * Conductor vinculado a la empresa.
- *
- * Estado laboral: manejado a través de {@link EmploymentSubstatus}.
- *   Un solo FK (id_substatus) trae consigo el subestado (motivo) y,
- *   mediante JOIN, el estado padre (ACTIVO / INACTIVO / RETIRADO).
- *
- * Estado operativo: campo ENUM propio {@link OperationalStatus}.
- *   DISPONIBLE al crear; EN_RUTA cuando el módulo de asignaciones lo indique.
- *
- * birth_date: requerido para calcular la vigencia máxima permitida
- *   de cada categoría de licencia según la normativa colombiana.
- */
 @Entity
 @Table(name = "drivers")
 @Getter
@@ -61,12 +50,13 @@ public class Driver {
     private LocalDate retirementDate;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "operational_status", nullable = false, length = 20)
     private OperationalStatus operationalStatus = OperationalStatus.DISPONIBLE;
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<License> licenses = new ArrayList<>();
+    private Set<License> licenses = new HashSet<>();
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<EmergencyContact> emergencyContacts = new ArrayList<>();
+    private Set<EmergencyContact> emergencyContacts = new HashSet<>();
 }

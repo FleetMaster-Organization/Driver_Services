@@ -7,13 +7,6 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-/**
- * Contacto de emergencia de un conductor.
- *
- * El administrador puede actualizar nombre, teléfono y parentesco
- * directamente sobre este registro (PATCH /drivers/{id}/emergency-contact/{contactId})
- * sin necesidad de eliminar y volver a crear.
- */
 @Entity
 @Table(name = "emergency_contacts")
 @Getter
