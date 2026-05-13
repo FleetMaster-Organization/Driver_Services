@@ -12,32 +12,27 @@ import java.util.UUID;
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, UUID> {
 
-    /** Verifica si ya existe un conductor con esa cédula (REQ-19: no duplicar). */
+    // Verifica si existe un conductor con determinada cédula y evita duplicidad.
     boolean existsByIdCard(String idCard);
 
-    /** Busca por cédula; útil para validar duplicidad al editar. */
-    Optional<Driver> findByIdCard(String idCard);
-
-    /**
-     * Carga el conductor con su subestado y estado padre en una sola query.
-     * Evita N+1 al acceder a substatus.employmentStatus.
-     */
+    // Carga un conductor con todas sus relaciones en una sola query.
+    // Carga: substatus → employmentStatus, licenses, emergencyContacts.
     @Query("""
-            SELECT d FROM Driver d
+            SELECT DISTINCT d FROM Driver d
             JOIN FETCH d.substatus sub
             JOIN FETCH sub.employmentStatus
+            LEFT JOIN FETCH d.licenses
+            LEFT JOIN FETCH d.emergencyContacts
             WHERE d.idDriver = :id
             """)
     Optional<Driver> findByIdWithSubstatus(UUID id);
 
-    /**
-     * Lista todos los conductores con sus relaciones de estado en una sola query.
-     * Usado para el listado del dashboard (REQ-20).
-     */
+    //  Lista todos los conductores con estado y licencias
     @Query("""
-            SELECT d FROM Driver d
+            SELECT DISTINCT d FROM Driver d
             JOIN FETCH d.substatus sub
             JOIN FETCH sub.employmentStatus
+            LEFT JOIN FETCH d.licenses
             ORDER BY d.lastName, d.firstName
             """)
     List<Driver> findAllWithSubstatus();
